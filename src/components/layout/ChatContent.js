@@ -1,5 +1,4 @@
-import { async } from "@firebase/util";
-import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Authcontext } from "../../contexts/AuthProvider";
@@ -12,7 +11,7 @@ const ChatContent = () => {
   const [change, setChange] = useState(false);
   const [dataChat, setDataChat] = useState({});
   const [valueMess, setValueMess] = useState("");
-  const { displayName, uid } = useContext(Authcontext);
+  const { displayName } = useContext(Authcontext);
   const { chatID } = useParams();
   useEffect(() => {
     const get = () => {
