@@ -1,6 +1,7 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
+import { NavLink } from "react-router-dom";
 const ChatNavBar = () => {
   return (
     <div className="h-full w-[60px] flex flex-col items-center border-r border-gray-200">
@@ -12,18 +13,36 @@ const ChatNavBar = () => {
             className="w-full object-cover rounded-full"
           />
         </div>
-        <div className="w-full h-[44px] rounded-md overflow-hidden p-1  flex items-center justify-center">
-          <i className="fa-solid fa-comment text-xl text-gray-400 hover:text-black transition-all ease-linear"></i>
-        </div>
-        <div className="w-full h-[44px] rounded-md overflow-hidden p-1  flex items-center justify-center">
-          <i className="fa-solid fa-user-group text-xl text-gray-400 hover:text-black transition-all ease-linear"></i>
-        </div>
-        <div className="w-full h-[44px] rounded-md overflow-hidden p-1  flex items-center justify-center">
-          <i className="fa-solid fa-trash-can-arrow-up text-xl text-gray-400 hover:text-black transition-all ease-linear"></i>
-        </div>
+        <NavLink
+          to={"chat"}
+          className={({ isActive }) =>
+            (isActive ? "text-blue-500" : "text-gray-300") +
+            " w-full h-[44px] rounded-md overflow-hidden p-1  flex items-center justify-center"
+          }
+        >
+          <i className="fa-solid fa-comment text-xl  hover:text-black transition-all ease-linear"></i>
+        </NavLink>
+        <NavLink
+          to={"fridens"}
+          className={({ isActive }) =>
+            (isActive ? "text-blue-500" : "text-gray-300") +
+            " w-full h-[44px] rounded-md overflow-hidden p-1  flex items-center justify-center"
+          }
+        >
+          <i className="fa-solid fa-user-group text-xl  hover:text-black transition-all ease-linear"></i>
+        </NavLink>
+        <NavLink
+          to={"archived"}
+          className={({ isActive }) =>
+            (isActive ? "text-blue-500" : "text-gray-300") +
+            " w-full h-[44px] rounded-md overflow-hidden p-1  flex items-center justify-center"
+          }
+        >
+          <i className="fa-solid fa-trash-can-arrow-up text-xl  hover:text-black transition-all ease-linear"></i>
+        </NavLink>
       </div>
       <i
-        class="fa-solid fa-right-from-bracket mb-3 text-xl text-gray-400 hover:text-black"
+        className="fa-solid fa-right-from-bracket mb-3 text-xl text-gray-300 hover:text-black"
         onClick={() => {
           signOut(auth);
         }}

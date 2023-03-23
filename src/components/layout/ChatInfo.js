@@ -1,8 +1,8 @@
 import React from "react";
 
-const ChatInfo = () => {
+const ChatInfo = ({ show }) => {
   return (
-    <div className="w-[300px]">
+    <div className={`w-[300px] ${show ? "block" : "hidden"}`}>
       <div className="w-full flex flex-col items-center py-5 gap-3">
         <img
           src="https://ibiettuot.com/wp-content/uploads/2021/10/avatar-mac-dinh.png"

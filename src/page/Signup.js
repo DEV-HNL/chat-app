@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TempleAuth from "../components/tempAuth/TempleAuth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -24,10 +24,15 @@ const Signup = () => {
       e.target.reset();
       return null;
     }
-
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: getValue.fullname,
+      });
+    } catch (error) {}
     try {
       const colRefAuth = collection(db, "auth");
       await addDoc(colRefAuth, {
+        id: auth.currentUser.uid,
         ...getValue,
       });
     } catch (error) {
