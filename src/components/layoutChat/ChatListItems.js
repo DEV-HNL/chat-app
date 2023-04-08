@@ -44,7 +44,7 @@ const ChatListItems = () => {
                 <UserList
                   key={items.id}
                   items={items?.data()}
-                  idChat={items.id}
+                  idChat={items?.id}
                 ></UserList>
               );
             }

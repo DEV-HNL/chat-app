@@ -1,5 +1,5 @@
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Authcontext } from "../../contexts/AuthProvider";
 import { db } from "../../firebase/config";
@@ -13,6 +13,7 @@ const ChatContent = () => {
   const [valueMess, setValueMess] = useState("");
   const { displayName } = useContext(Authcontext);
   const { chatID } = useParams();
+  const colRef = useRef();
   useEffect(() => {
     const get = () => {
       const docRef = doc(db, "messenger", chatID);
@@ -27,11 +28,15 @@ const ChatContent = () => {
     };
     chatID && get();
   }, [chatID, change]);
+  useEffect(() => {
+    colRef.current?.scrollIntoView();
+  }, [dataChat]);
   const handleGetValueMess = (e) => {
     setValueMess(e.target.value);
   };
   const handleSubmitMess = async (e) => {
     e.preventDefault();
+    e.target.reset();
     await setChange(!change);
     const docRef = await doc(db, "messenger", chatID);
     if (!dataChat.messenger) {
@@ -54,7 +59,6 @@ const ChatContent = () => {
         ],
       });
     }
-    e.target.reset();
   };
 
   return (
@@ -84,21 +88,25 @@ const ChatContent = () => {
             ></i>
           </div>
         </div>
-        <div className="w-full flex-1 flex flex-col  gap-3 p-3 justify-end">
+        <div className=" flex flex-col p-3 overflow-y-auto mt-auto content-chat ">
           {dataChat.messenger &&
             dataChat.messenger.map((items, index) => {
               return <Messenger key={index} items={items}></Messenger>;
             })}
+          <p ref={colRef}></p>
         </div>
-        <form onSubmit={handleSubmitMess} className="w-full flex p-3 relative">
+        <form
+          onSubmit={handleSubmitMess}
+          className=" rounded-lg flex m-3 relative border border-gray-200"
+        >
           <input
             type="text"
             placeholder="Messenger"
             onChange={handleGetValueMess}
-            className="flex-1 p-2 outline-none border border-gray-200 rounded-xl"
+            className=" w-[calc(100%-44px)] p-2 outline-none  rounded-xl"
           />
           <button type="submit">
-            <i className="fa-solid fa-paper-plane absolute right-8 top-[50%] translate-y-[-50%] text-blue-500 text-xl"></i>
+            <i className="fa-solid fa-paper-plane absolute right-3 top-[50%] translate-y-[-50%] text-blue-500 text-xl"></i>
           </button>
         </form>
       </div>
